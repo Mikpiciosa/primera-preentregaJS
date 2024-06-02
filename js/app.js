@@ -94,3 +94,26 @@ function limpiarHTML() {
     contenedorCarrito.removeChild(contenedorCarrito.firstChild);
   }
 }
+
+const url = "https://randomuser.me/api/?results=5";
+
+function getUser(url) {
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      const dataContainer = document.querySelector(".reseñas--list");
+      data.results.forEach((user) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <img src="${user.picture.medium}" alt="User Picture"/>
+          <p>${user.name.first} ${user.name.last}</p>
+        `;
+        dataContainer.appendChild(li);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching the users:", error);
+    });
+}
+
+getUser(url);
